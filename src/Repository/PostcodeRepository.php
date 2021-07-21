@@ -19,32 +19,15 @@ class PostcodeRepository extends ServiceEntityRepository
         parent::__construct($registry, PostcodeRating::class);
     }
 
-    // /**
-    //  * @return PostcodeRating[] Returns an array of PostcodeRating objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOneByPostcodeArea($value): ?PostcodeRating
     {
+        $area = substr(str_replace(' ', '', $value['postcode']), 0, -3);
+        echo $area;
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?PostcodeRating
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.postcodeArea = :postcode')
+            ->setParameter('postcode', $area)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }

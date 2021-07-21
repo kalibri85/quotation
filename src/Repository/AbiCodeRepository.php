@@ -19,32 +19,13 @@ class AbiCodeRepository extends ServiceEntityRepository
         parent::__construct($registry, AbiCodeRating::class);
     }
 
-    // /**
-    //  * @return AbiCodeRating[] Returns an array of AbiCodeRating objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOneByAbiCode($value): ?AbiCodeRating
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?AbiCodeRating
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('a.abi_code = :val')
+            ->setParameter('abi_code', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }

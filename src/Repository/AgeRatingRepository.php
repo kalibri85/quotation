@@ -19,32 +19,13 @@ class AgeRatingRepository extends ServiceEntityRepository
         parent::__construct($registry, AgeRating::class);
     }
 
-    // /**
-    //  * @return AgeRating[] Returns an array of AgeRating objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOneByAge($value): ?AgeRating
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?AgeRating
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('a.age = :age')
+            ->setParameter('age', $value['age'])
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }
