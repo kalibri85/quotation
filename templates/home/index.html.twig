@@ -6,13 +6,7 @@
 
 <div class="example-wrapper">
     <h1>Check total premium! </h1>
-    {{ form_start(form, {attr: {class: 'form-wrap mt-4'}}) }}
-        <div class="btn-group" role="group" aria-label="home search">
-            {{ form_widget(form.age, {attr: {class: 'form-check-inline','placeholder': 'Enter age'}}) }}
-            {{ form_row(form.postcode, {attr: {class: 'btn-group2','placeholder': 'Postcode'}}) }}
-            {{ form_row(form.regNo, {attr: {class: 'btn-group2','placeholder': 'Car regNo'}}) }}
-            {{ form_widget(form.filter, {attr: {class: 'btn-form'}}) }}
-        </div>
-    {{ form_end(form) }}
+    {{ form(form) }}
+    
 </div>
 {% endblock %}

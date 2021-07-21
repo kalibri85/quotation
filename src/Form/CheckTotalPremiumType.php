@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,10 +17,10 @@ class CheckTotalPremiumType extends AbstractType
             ->setMethod('GET')
             ->add(
                 'age',
-                TextType::class,
+                IntegerType::class,
                 [
                     'label' => false,
-                    'attr' => ['class' => 'trip_departFrom'],
+                    'attr' => ['class' => '', 'placeholder' => 'Age', 'min' => 17, 'max' => 70],
                     'required' => true,
                 ]
             )
@@ -28,14 +29,18 @@ class CheckTotalPremiumType extends AbstractType
                 TextType::class,
                 [
                     'label' => false,
-                    'attr' => ['class' => 'trip_departFrom'],
-                    'required' => true,
+                    'attr' => ['class' => '', 'placeholder' => 'Postcode'],
+                    'required' => true
                 ]
             )
             ->add(
                 'regNo',
                 TextType::class,
-                ['label' => false, 'required' => true]
+                [
+                    'label' => false, 
+                    'attr' => ['class' => '', 'placeholder' => 'Car regNo'],
+                    'required' => true
+                ]
             )
             ->add(
                 'filter',
