@@ -8,6 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class CheckTotalPremiumType extends AbstractType
 {
@@ -30,7 +33,15 @@ class CheckTotalPremiumType extends AbstractType
                 [
                     'label' => false,
                     'attr' => ['class' => '', 'placeholder' => 'Postcode'],
-                    'required' => true
+                    'required' => true,
+                    'constraints' => [
+                        new Length(['min' => 6, 'max' => 10]),
+                        new Regex([
+                            'pattern'   => '/^[0-9A-Z\s]+$/',
+                            'match'     => true,
+                            'message'   => 'The postcode must contain only Capital letters, numbers and space.'
+                        ])
+                    ]
                 ]
             )
             ->add(
@@ -39,7 +50,14 @@ class CheckTotalPremiumType extends AbstractType
                 [
                     'label' => false,
                     'attr' => ['class' => '', 'placeholder' => 'Car regNo'],
-                    'required' => true
+                    'required' => true,
+                    'constraints' => [
+                        new Regex([
+                            'pattern'   => '/^[0-9A-Za-z\s]+$/',
+                            'match'     => true,
+                            'message'   => 'The vehicle reg. number must contain only letters, numbers and space.'
+                        ])
+                    ]
                 ]
             )
             ->add(
