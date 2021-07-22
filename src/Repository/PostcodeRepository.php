@@ -22,7 +22,7 @@ class PostcodeRepository extends ServiceEntityRepository
     public function findOneByPostcodeArea($value): ?PostcodeRating
     {
         $area = substr(str_replace(' ', '', $value['postcode']), 0, -3);
-        echo $area;
+
         return $this->createQueryBuilder('p')
             ->andWhere('p.postcodeArea = :postcode')
             ->setParameter('postcode', $area)

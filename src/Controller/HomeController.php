@@ -5,14 +5,21 @@ namespace App\Controller;
 use App\Form\CheckTotalPremiumType;
 use App\Repository\AgeRatingRepository;
 use App\Repository\PostcodeRepository;
+use App\Repository\AbiCodeRepository;
+use App\Http\AbiApp;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 
 class HomeController extends AbstractController
 {
+    const BASE_PREMIUM = 500; 
     /**
      * @Route("/", name="home")
      */
@@ -31,15 +38,19 @@ class HomeController extends AbstractController
      * @Route("/quotation", name="quotation")
      * @Method("GET")
      */
-    public function searchAction(Request $request, AgeRatingRepository $ageRaitingRepository, PostcodeRepository $postcodeRepository)
+    public function searchAction(Request $request, AgeRatingRepository $ageRaitingRepository, PostcodeRepository $postcodeRepository, AbiCodeRepository $abiCodeRepository)
     {
         $form = $this->getSearchForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $dat = $form->getData();
+            
             $ageRaiting = $ageRaitingRepository->findOneByAge($form->getData());
             $postcodeRaiting = $postcodeRepository->findOneByPostcodeArea($form->getData());
-            var_dump($postcodeRaiting);
+            $abiRaiting = $abiCodeRepository->findOneByAbiCode(AbiApp::getAbiResponse($dat['regNo']));
+            //$total = self::BASE_PREMIUM * $ageRaiting -> getRatingFactor() + self::BASE_PREMIUM * $postcodeRaiting -> getRatingFactor() + self::BASE_PREMIUM * $abiRaiting -> getRatingFactor();
+            //echo $total;
         }
 
         return $this->render(

@@ -22,8 +22,8 @@ class AbiCodeRepository extends ServiceEntityRepository
     public function findOneByAbiCode($value): ?AbiCodeRating
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.abi_code = :val')
-            ->setParameter('abi_code', $value)
+            ->andWhere('a.abiCode = :val')
+            ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
