@@ -44,6 +44,4 @@ class AgeRating
 
         return $this;
     }
-
-
 }

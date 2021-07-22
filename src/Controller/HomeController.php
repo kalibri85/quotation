@@ -19,7 +19,7 @@ use Symfony\Component\HttpClient\Response\MockResponse;
 
 class HomeController extends AbstractController
 {
-    const BASE_PREMIUM = 500; 
+    const BASE_PREMIUM = 500;
     /**
      * @Route("/", name="home")
      */
@@ -38,8 +38,12 @@ class HomeController extends AbstractController
      * @Route("/quotation", name="quotation")
      * @Method("GET")
      */
-    public function searchAction(Request $request, AgeRatingRepository $ageRaitingRepository, PostcodeRepository $postcodeRepository, AbiCodeRepository $abiCodeRepository)
-    {
+    public function searchAction(
+        Request $request,
+        AgeRatingRepository $ageRaitingRepository,
+        PostcodeRepository $postcodeRepository,
+        AbiCodeRepository $abiCodeRepository
+    ) {
         $form = $this->getSearchForm();
         $form->handleRequest($request);
 
@@ -50,12 +54,20 @@ class HomeController extends AbstractController
             $postcodeRaiting = $postcodeRepository->findOneByPostcodeArea($form->getData());
             $abiRaiting = $abiCodeRepository->findOneByAbiCode(AbiApp::getAbiResponse($dat['regNo']));
             $total = $this->getTotalPremium(
-                self::BASE_PREMIUM, 
-                is_null($ageRaiting) ? 1 : $ageRaiting -> getRatingFactor(), 
-                is_null($postcodeRaiting) ? 1 : $postcodeRaiting -> getRatingFactor(), 
-                is_null($abiRaiting) ? 1 : $abiRaiting -> getRatingFactor()
+                self::BASE_PREMIUM,
+                is_null($ageRaiting) ? 1 : $ageRaiting->getRatingFactor(),
+                is_null($postcodeRaiting) ? 1 : $postcodeRaiting->getRatingFactor(),
+                is_null($abiRaiting) ? 1 : $abiRaiting->getRatingFactor()
             );
-            echo $total;
+
+            return new JsonResponse(
+                [
+                    'age' => $dat['age'],
+                    'postcode' => $dat['postcode'],
+                    'regNo' => $dat['regNo'],
+                    'total Premium' => $total
+                ]
+            );
         }
 
         return $this->render(
@@ -78,7 +90,8 @@ class HomeController extends AbstractController
         );
     }
 
-    protected function getTotalPremium($base, $a, $p, $ab) {
+    protected function getTotalPremium($base, $a, $p, $ab)
+    {
         return $base * $a + $base * $p + $base * $ab;
     }
 }

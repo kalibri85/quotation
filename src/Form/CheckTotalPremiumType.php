@@ -37,7 +37,7 @@ class CheckTotalPremiumType extends AbstractType
                 'regNo',
                 TextType::class,
                 [
-                    'label' => false, 
+                    'label' => false,
                     'attr' => ['class' => '', 'placeholder' => 'Car regNo'],
                     'required' => true
                 ]
