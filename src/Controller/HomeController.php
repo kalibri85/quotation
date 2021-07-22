@@ -49,8 +49,13 @@ class HomeController extends AbstractController
             $ageRaiting = $ageRaitingRepository->findOneByAge($form->getData());
             $postcodeRaiting = $postcodeRepository->findOneByPostcodeArea($form->getData());
             $abiRaiting = $abiCodeRepository->findOneByAbiCode(AbiApp::getAbiResponse($dat['regNo']));
-            //$total = self::BASE_PREMIUM * $ageRaiting -> getRatingFactor() + self::BASE_PREMIUM * $postcodeRaiting -> getRatingFactor() + self::BASE_PREMIUM * $abiRaiting -> getRatingFactor();
-            //echo $total;
+            $total = $this->getTotalPremium(
+                self::BASE_PREMIUM, 
+                is_null($ageRaiting) ? 1 : $ageRaiting -> getRatingFactor(), 
+                is_null($postcodeRaiting) ? 1 : $postcodeRaiting -> getRatingFactor(), 
+                is_null($abiRaiting) ? 1 : $abiRaiting -> getRatingFactor()
+            );
+            echo $total;
         }
 
         return $this->render(
@@ -71,5 +76,9 @@ class HomeController extends AbstractController
                 'action' => $this->generateUrl('quotation')
             ]
         );
+    }
+
+    protected function getTotalPremium($base, $a, $p, $ab) {
+        return $base * $a + $base * $p + $base * $ab;
     }
 }
